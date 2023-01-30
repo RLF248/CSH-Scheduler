@@ -1,0 +1,85 @@
+{
+  "name": "csh-sheduler",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/csh-sheduler/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/csh-sheduler",
+        "index": "apps/csh-sheduler/src/index.html",
+        "baseHref": "/",
+        "main": "apps/csh-sheduler/src/main.tsx",
+        "polyfills": "apps/csh-sheduler/src/polyfills.ts",
+        "tsConfig": "apps/csh-sheduler/tsconfig.app.json",
+        "assets": [
+          "apps/csh-sheduler/src/favicon.ico",
+          "apps/csh-sheduler/src/assets"
+        ],
+        "styles": ["apps/csh-sheduler/src/styles.css"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/csh-sheduler/src/environments/environment.ts",
+              "with": "apps/csh-sheduler/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "csh-sheduler:build",
+        "hmr": true,
+        "proxyConfig": "apps/csh-sheduler/proxy.conf.json"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "csh-sheduler:build:development"
+        },
+        "production": {
+          "buildTarget": "csh-sheduler:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/csh-sheduler/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/csh-sheduler/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
